@@ -10,11 +10,11 @@
     <body>
     <c:import url="/inc/menu.jsp"/>
         <div>
-            <form method="post" action="creationClient">
+            <form method="post" action="<c:url value="/creationClient"/>" enctype="multipart/form-data">
                 <c:import url="/inc/inc_client_form.jsp"/>
+                <p class="info">${form.resultat}</p>
                 <input type="submit" value="Valider"  />
                 <input type="reset" value="Remettre à zéro" /> <br />
-                <p class="erreur">${formClient.resultat}</p>
             </form>
         </div>
     </body>

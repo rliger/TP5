@@ -15,6 +15,7 @@ import fr.tp4.forms.FormClient;
 
 public class CreationClient extends HttpServlet {
 
+	public static final String CHEMIN = "chemin";
 	public static final String ATT_CLIENT = "client";
 	public static final String ATT_FORM = "form";
 	public static final String SESSION_CLIENTS = "clients";
@@ -28,11 +29,13 @@ public class CreationClient extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String chemin = this.getServletConfig().getInitParameter(CHEMIN);
 		/* Préparation de l'objet formulaire */
 		FormClient form = new FormClient();
 
 		/* Traitement de la requête et récupération du bean en résultant */
-		Client client = form.creationClient(request);
+		Client client = form.creationClient(request, chemin);
 
 		/* Ajout du bean et de l'objet métier à l'objet requête */
 		request.setAttribute(ATT_CLIENT, client);

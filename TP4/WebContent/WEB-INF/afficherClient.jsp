@@ -9,29 +9,14 @@
 </head>
 <body>
 	<c:import url="../inc/menu.jsp" />
-			<p class="info">Client créé avec succès !</p>
-
-
-			<%-- Puis affichage des données enregistrées dans le bean "client" transmis par la servlet --%>
-			<p>
-				Nom :
-				<c:out value="${ client.nom }" />
-			</p>
-			<p>
-				Prénom :
-				<c:out value="${ client.prenom }" />
-			</p>
-			<p>
-				Adresse :
-				<c:out value="${ client.adresse }" />
-			</p>
-			<p>
-				Numéro de téléphone :
-				<c:out value="${ client.telephone }" />
-			</p>
-			<p>
-				Email :
-				<c:out value="${ client.email }" />
-			</p>
+		<div id="corps">
+            <p class="info">${ form.resultat }</p>
+            <p>Nom : <c:out value="${ client.nom }"/></p>
+            <p>Prénom : <c:out value="${ client.prenom }"/></p>
+            <p>Adresse : <c:out value="${ client.adresse }"/></p>
+            <p>Numéro de téléphone : <c:out value="${ client.telephone }"/></p>
+            <p>Email : <c:out value="${ client.email }"/></p>
+            <p>Image : <c:out value="${ client.image }"/></p>
+        </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
     <body>
         <c:import url="/inc/menu.jsp" />
         <div>
-            <form method="post" action="<c:url value="/creationCommande"/>">
+            <form method="post" action="<c:url value="/creationCommande"/>" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Informations client</legend>
                     <%-- Si et seulement si la Map des clients en session n'est pas vide, alors on propose un choix à l'utilisateur --%>
@@ -73,9 +73,9 @@
                     <input type="text" id="statutLivraisonCommande" name="statutLivraisonCommande" value="<c:out value="${commande.statutLivraison}"/>" size="30" maxlength="30" />
                     <span class="erreur">${form.erreurs['statutLivraisonCommande']}</span>
                     <br />
-                    
-                    <p class="info">${ form.resultat }</p>
+
                 </fieldset>
+                <p class="info">${ form.resultat }</p>
                 <input type="submit" value="Valider"  />
                 <input type="reset" value="Remettre à zéro" /> <br />
             </form>

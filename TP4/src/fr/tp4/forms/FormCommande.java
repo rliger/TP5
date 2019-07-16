@@ -38,7 +38,7 @@ public final class FormCommande {
 		return resultat;
 	}
 
-	public Commande creationCommande(HttpServletRequest request) {
+	public Commande creationCommande(HttpServletRequest request, String chemin) {
 		Client client;
 		/*
 		 * Si l'utilisateur choisit un client déjà existant, pas de validation à
@@ -61,7 +61,7 @@ public final class FormCommande {
 			 * créé.
 			 */
 			FormClient clientForm = new FormClient();
-			client = clientForm.creationClient(request);
+			client = clientForm.creationClient(request, chemin);
 
 			/*
 			 * Et très important, il ne faut pas oublier de récupérer le contenu de la map
@@ -96,7 +96,7 @@ public final class FormCommande {
 		double valeurMontant = -1;
 		try {
 			valeurMontant = validationMontant(montant);
-		} catch (Exception e) {
+		} catch (FormValidationException e) {
 			setErreur(CHAMP_MONTANT, e.getMessage());
 		}
 		commande.setMontant(valeurMontant);
@@ -105,28 +105,28 @@ public final class FormCommande {
 
 		try {
 			validationModePaiement(modePaiement);
-		} catch (Exception e) {
+		} catch (FormValidationException e) {
 			setErreur(CHAMP_MODE_PAIEMENT, e.getMessage());
 		}
 		commande.setModePaiement(modePaiement);
 
 		try {
 			validationStatutPaiement(statutPaiement);
-		} catch (Exception e) {
+		} catch (FormValidationException e) {
 			setErreur(CHAMP_STATUT_PAIEMENT, e.getMessage());
 		}
 		commande.setStatutPaiement(statutPaiement);
 
 		try {
 			validationModeLivraison(modeLivraison);
-		} catch (Exception e) {
+		} catch (FormValidationException e) {
 			setErreur(CHAMP_MODE_LIVRAISON, e.getMessage());
 		}
 		commande.setModeLivraison(modeLivraison);
 
 		try {
 			validationStatutLivraison(statutLivraison);
-		} catch (Exception e) {
+		} catch (FormValidationException e) {
 			setErreur(CHAMP_STATUT_LIVRAISON, e.getMessage());
 		}
 		commande.setStatutLivraison(statutLivraison);
@@ -139,54 +139,54 @@ public final class FormCommande {
 		return commande;
 	}
 
-	private double validationMontant(String montant) throws Exception {
+	private double validationMontant(String montant) throws FormValidationException {
 		double temp;
 		if (montant != null) {
 			try {
 				temp = Double.parseDouble(montant);
 				if (temp < 0) {
-					throw new Exception("Le montant doit être un nombre positif.");
+					throw new FormValidationException("Le montant doit être un nombre positif.");
 				}
 			} catch (NumberFormatException e) {
 				temp = -1;
-				throw new Exception("Le montant doit être un nombre.");
+				throw new FormValidationException("Le montant doit être un nombre.");
 			}
 		} else {
 			temp = -1;
-			throw new Exception("Merci d'entrer un montant.");
+			throw new FormValidationException("Merci d'entrer un montant.");
 		}
 		return temp;
 	}
 
-	private void validationModePaiement(String modePaiement) throws Exception {
+	private void validationModePaiement(String modePaiement) throws FormValidationException {
 		if (modePaiement != null) {
 			if (modePaiement.length() < 2) {
-				throw new Exception("Le mode de paiement doit contenir au moins 2 caractères.");
+				throw new FormValidationException("Le mode de paiement doit contenir au moins 2 caractères.");
 			}
 		} else {
-			throw new Exception("Merci d'entrer un mode de paiement.");
+			throw new FormValidationException("Merci d'entrer un mode de paiement.");
 		}
 	}
 
-	private void validationStatutPaiement(String statutPaiement) throws Exception {
+	private void validationStatutPaiement(String statutPaiement) throws FormValidationException {
 		if (statutPaiement != null && statutPaiement.length() < 2) {
-			throw new Exception("Le statut de paiement doit contenir au moins 2 caractères.");
+			throw new FormValidationException("Le statut de paiement doit contenir au moins 2 caractères.");
 		}
 	}
 
-	private void validationModeLivraison(String modeLivraison) throws Exception {
+	private void validationModeLivraison(String modeLivraison) throws FormValidationException {
 		if (modeLivraison != null) {
 			if (modeLivraison.length() < 2) {
-				throw new Exception("Le mode de livraison doit contenir au moins 2 caractères.");
+				throw new FormValidationException("Le mode de livraison doit contenir au moins 2 caractères.");
 			}
 		} else {
-			throw new Exception("Merci d'entrer un mode de livraison.");
+			throw new FormValidationException("Merci d'entrer un mode de livraison.");
 		}
 	}
 
-	private void validationStatutLivraison(String statutLivraison) throws Exception {
+	private void validationStatutLivraison(String statutLivraison) throws FormValidationException {
 		if (statutLivraison != null && statutLivraison.length() < 2) {
-			throw new Exception("Le statut de livraison doit contenir au moins 2 caractères.");
+			throw new FormValidationException("Le statut de livraison doit contenir au moins 2 caractères.");
 		}
 	}
 
